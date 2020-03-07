@@ -1,0 +1,14 @@
+export const ADD_TICKET = "ADD_TICKET";
+export const GET_TICKET = "GET_TICKET";
+export const REGISTER = "REGISTER";
+export const LOGIN = "LOGIN";
+export const THIS_USER = "THIS_USER";
+export const GET_TYPE = "GET_TYPE";
+export const ROUTING_ADMIN = "ROUTING_ADMIN";
+export const ORDER_TICKET = "ORDER_TICKET";
+export const MY_TICKET = "MY_TICKET";
+export const UPLOAD_PAYMENT = "UPLOAD_PAYMENT";
+export const CHOOSE_TICKET = "CHOOSE_TICKET";
+export const ALL_ORDER = "ALL_ORDER";
+export const APPROVE = "APPROVE";
+export const FIND_TICKET_LIKE = "FIND_ORDER_LIKE";
