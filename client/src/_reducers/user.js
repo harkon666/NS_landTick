@@ -1,4 +1,4 @@
-import { THIS_USER } from "../config/constants";
+import { THIS_USER, LOGOUT } from "../config/constants";
 
 const initialState = {
   data: [],
@@ -26,6 +26,13 @@ const reducer = (state = initialState, action) => {
         ...state,
         isLogin: false,
         error: true,
+        loading: false
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        isLogin: action.payload,
+        data: [],
         loading: false
       };
     default:

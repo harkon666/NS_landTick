@@ -4,11 +4,10 @@ import { register } from "../../_actions/auth";
 import { Modal, Form, Row, Col } from "react-bootstrap";
 
 function ModalRegister(props) {
-  const { userLogin, login } = props;
   const [registers, setRegister] = useState({
     name: "",
     username: "",
-    Register: "",
+    email: "",
     password: "",
     gender: "",
     phone: "",
@@ -57,7 +56,7 @@ function ModalRegister(props) {
             <Col>
               <Form.Control
                 placeholder="email"
-                type="Register"
+                type="text"
                 value={registers.email}
                 onChange={e =>
                   setRegister({ ...registers, email: e.target.value })
@@ -117,7 +116,7 @@ function ModalRegister(props) {
         <button
           className="btn btn-primary"
           onClick={() => {
-            props.register(register);
+            props.register(registers);
           }}
           style={{ width: "25%" }}
         >
@@ -129,12 +128,14 @@ function ModalRegister(props) {
 }
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    auth: state.auth
+  };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    register: register => dispatch(register(register))
+    register: load => dispatch(register(load))
   };
 };
 

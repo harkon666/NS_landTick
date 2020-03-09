@@ -8,7 +8,6 @@ const MyCard = props => {
   const { findTicketrLike } = props;
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
-  console.log(props.ticket, "woi tiket");
   return (
     <>
       <Card
@@ -93,7 +92,9 @@ const MyCard = props => {
                       </Form.Label>
                       <Form.Control as="select">
                         {["", "", "", "", "", "", ""].map((item, i) => (
-                          <option key={i}>{i}</option>
+                          <option value={i} key={i}>
+                            {i}
+                          </option>
                         ))}
                       </Form.Control>
                     </Form.Group>

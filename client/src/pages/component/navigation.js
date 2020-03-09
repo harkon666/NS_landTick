@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+
 import ModalLogin from "./modalLogin";
 import ModalRegister from "./modalRegister";
 import DropDown from "./dropdown";
@@ -18,7 +20,9 @@ const Navigation = ({ user, auth }) => {
     <nav class="navbar navbar-expand shadow">
       <div className="container">
         <div className="col-lg-8">
-          <h2 className="navbar-brand text-primary">LandTick</h2>
+          <Link to="/">
+            <h2 className="navbar-brand text-primary">LandTick</h2>
+          </Link>
         </div>
         <div className="col-lg-4 ml-5">
           {!user.isLogin && auth.data.message != "success" ? (

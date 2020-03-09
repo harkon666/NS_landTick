@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { Card } from "react-bootstrap";
+import { Card, Modal } from "react-bootstrap";
 import { connect } from "react-redux";
+
 import { orderTicket } from "../../_actions/order";
+
+import ModalBooking from "./modalBooking";
 
 const calculationHour = (start, arrival) => {
   const x = start.split(":");
@@ -22,6 +25,7 @@ const ListTicket = ({ list, orderTicket }) => {
     totalPrice: 0,
     flag: false
   });
+  const [show, setShow] = useState(false);
   const storeTicket = load => {
     orderTicket(load);
   };
@@ -39,10 +43,13 @@ const ListTicket = ({ list, orderTicket }) => {
     storeTicket(load);
     setLoad({ ...load, flag: false });
   }
+
+  console.log(list, "woi gan");
   return (
     <>
       {list.length > 0 ? (
         <>
+          <ModalBooking show={show} onHide={() => setShow(false)} />
           <div className="container">
             <div className="row my-3">
               <div className="col ml-3">Nama Kereta</div>
@@ -57,15 +64,43 @@ const ListTicket = ({ list, orderTicket }) => {
                 className="my-3 shadow"
                 onClick={() => {
                   chooseTicket(item);
+                  setShow(true);
                 }}
                 key={index}
                 style={{ cursor: "pointer" }}
               >
                 <div className="container">
                   <div className="row my-3">
-                    <div className="col">{item.nameTrain}</div>
-                    <div className="col">{item.startTimer}</div>
-                    <div className="col">{item.arrivalTime}</div>
+                    <div className="col">
+                      <div className="row">
+                        <div className="col">{item.nameTrain}</div>
+                      </div>
+                      <div className="row">
+                        <div className="col">
+                          <h6>{item?.type?.name}</h6>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col">
+                      <div className="row">
+                        <div className="col">{item.startTimer}</div>
+                      </div>
+                      <div className="row">
+                        <div className="col">
+                          <h6>{item.startStation}</h6>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col">
+                      <div className="row">
+                        <div className="col">{item.arrivalTime}</div>
+                      </div>
+                      <div className="row">
+                        <div className="col">
+                          <h6>{item.destinationStation}</h6>
+                        </div>
+                      </div>
+                    </div>
                     <div className="col">
                       {calculationHour(item.startTimer, item.arrivalTime)}
                     </div>

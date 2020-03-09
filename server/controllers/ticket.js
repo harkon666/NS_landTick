@@ -1,10 +1,20 @@
 const models = require("../models");
 const Ticket = models.ticket;
+const Type = models.type;
 const { Op } = require("sequelize");
 
 exports.getTicket = async (req, res) => {
   try {
-    const data = await Ticket.findAll({});
+    const data = await Ticket.findAll({
+      include: [
+        {
+          model: Type,
+          attributes: {
+            exclude: ["updatedAt", "createdAt"]
+          }
+        }
+      ]
+    });
     res.send({ message: "success", data });
   } catch (err) {
     console.log(err);
@@ -49,10 +59,18 @@ exports.findOrderLike = async (req, res) => {
     const data = await Ticket.findAll({
       where: {
         startStation: {
-          [Op.like]: `%${start}%`
+          [Op.iLike]: `%${start}%`
         },
-        destinationStation: { [Op.like]: `%${end}%` }
-      }
+        destinationStation: { [Op.iLike]: `%${end}%` }
+      },
+      include: [
+        {
+          model: Type,
+          attributes: {
+            exclude: ["updatedAt", "createdAt"]
+          }
+        }
+      ]
     });
     res.send({ message: "success", data });
   } catch (err) {

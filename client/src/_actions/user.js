@@ -1,4 +1,4 @@
-import { THIS_USER } from "../config/constants";
+import { THIS_USER, LOGOUT } from "../config/constants";
 import { API, setAuthToken } from "../config/api";
 
 export const thisUser = () => {
@@ -10,6 +10,16 @@ export const thisUser = () => {
       const res = await API.get("/this_user");
       const { data } = res.data;
       return data;
+    }
+  };
+};
+
+export const logout = () => {
+  return {
+    type: LOGOUT,
+    payload: () => {
+      localStorage.removeItem("jwToken");
+      return false;
     }
   };
 };

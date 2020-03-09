@@ -19,7 +19,12 @@ const MyTicket = ({ thisUser, myTicket, order }) => {
     let month = res.split(" ");
     return `${param[2]} ${month} ${param[0]}`;
   };
-  console.log(order, "woi");
+
+  const nameStation = text => {
+    const result = text.split(" ");
+    return result[0];
+  };
+
   const myTickets = order.myTicket;
   return myTickets.map((item, i) => (
     <>
@@ -44,10 +49,10 @@ const MyTicket = ({ thisUser, myTicket, order }) => {
                 <div className="col-2">
                   <h3>{item.ticket.nameTrain}</h3>
                   <p>{item.ticket.type.name}</p>
-                  {item.status != "approve" ? (
+                  {item.status !== "approved" ? (
                     <p className="text-warning">Pending</p>
                   ) : (
-                    <p className="text-success">Approve</p>
+                    <p className="text-success">Approved</p>
                   )}
                 </div>
                 <div className="col-3">
@@ -81,7 +86,7 @@ const MyTicket = ({ thisUser, myTicket, order }) => {
                   <div className="row">
                     <div className="col">
                       <div className="row">
-                        <h4>{item.ticket.startStation}</h4>
+                        <h4>Stasiun {nameStation(item.ticket.startStation)}</h4>
                       </div>
                       <div className="row">
                         <p>{item.ticket.startStation}</p>
@@ -91,7 +96,9 @@ const MyTicket = ({ thisUser, myTicket, order }) => {
                   <div className="row">
                     <div className="col">
                       <div className="row">
-                        <h4>{item.ticket.destinationStation}</h4>
+                        <h4>
+                          Stasiun {nameStation(item.ticket.destinationStation)}
+                        </h4>
                       </div>
                       <div className="row">
                         <p>{item.ticket.destinationStation}</p>

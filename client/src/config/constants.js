@@ -12,3 +12,4 @@ export const CHOOSE_TICKET = "CHOOSE_TICKET";
 export const ALL_ORDER = "ALL_ORDER";
 export const APPROVE = "APPROVE";
 export const FIND_TICKET_LIKE = "FIND_ORDER_LIKE";
+export const LOGOUT = "LOGOUT";
