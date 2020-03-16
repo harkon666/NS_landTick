@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Card, Modal } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Card, Modal, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 
 import { orderTicket } from "../../_actions/order";
@@ -18,14 +18,16 @@ const calculationHour = (start, arrival) => {
   }
 };
 
-const ListTicket = ({ list, orderTicket }) => {
+const ListTicket = ({ list, orderTicket, quantity }) => {
   const [load, setLoad] = useState({
     ticket_id: 0,
     qty: 0,
     totalPrice: 0,
     flag: false
   });
+
   const [show, setShow] = useState(false);
+
   const storeTicket = load => {
     orderTicket(load);
   };
@@ -33,7 +35,7 @@ const ListTicket = ({ list, orderTicket }) => {
     setLoad({
       ...load,
       ticket_id: item.id,
-      qty: 1,
+      qty: quantity,
       totalPrice: item.price,
       flag: true
     });
@@ -44,7 +46,7 @@ const ListTicket = ({ list, orderTicket }) => {
     setLoad({ ...load, flag: false });
   }
 
-  console.log(list, "woi gan");
+  console.log(quantity, "woi gan");
   return (
     <>
       {list.length > 0 ? (
@@ -53,22 +55,15 @@ const ListTicket = ({ list, orderTicket }) => {
           <div className="container">
             <div className="row my-3">
               <div className="col ml-3">Nama Kereta</div>
-              <div className="col ml-3">Berangkat</div>
-              <div className="col text-center">Tiba</div>
-              <div className="col text-right">Durasi</div>
-              <div className="col-4 text-center pl-5">Harga Per Orang</div>
+              <div className="col">Berangkat</div>
+              <div className="col">Tiba</div>
+              <div className="col">Durasi</div>
+              <div className="col">Harga Per Orang</div>
+              <div className="col-2"></div>
             </div>
             {list.map((item, index) => (
               //ini nanti harus ada hovernya
-              <Card
-                className="my-3 shadow"
-                onClick={() => {
-                  chooseTicket(item);
-                  setShow(true);
-                }}
-                key={index}
-                style={{ cursor: "pointer" }}
-              >
+              <Card className="my-3 shadow" key={index}>
                 <div className="container">
                   <div className="row my-3">
                     <div className="col">
@@ -83,11 +78,11 @@ const ListTicket = ({ list, orderTicket }) => {
                     </div>
                     <div className="col">
                       <div className="row">
-                        <div className="col">{item.startTimer}</div>
+                        <div className="col">{item.startTime}</div>
                       </div>
                       <div className="row">
                         <div className="col">
-                          <h6>{item.startStation}</h6>
+                          <h6>{item.start.location}</h6>
                         </div>
                       </div>
                     </div>
@@ -97,14 +92,24 @@ const ListTicket = ({ list, orderTicket }) => {
                       </div>
                       <div className="row">
                         <div className="col">
-                          <h6>{item.destinationStation}</h6>
+                          <h6>{item.end.location}</h6>
                         </div>
                       </div>
                     </div>
                     <div className="col">
-                      {calculationHour(item.startTimer, item.arrivalTime)}
+                      {calculationHour(item.startTime, item.arrivalTime)}
                     </div>
                     <div className="col">Rp. {item.price}</div>
+                    <div className="col">
+                      <Button
+                        onClick={() => {
+                          chooseTicket(item);
+                          setShow(true);
+                        }}
+                      >
+                        Beli
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </Card>

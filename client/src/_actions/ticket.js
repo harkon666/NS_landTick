@@ -21,7 +21,7 @@ export const addTicket = load => {
         type_id: load.type_id,
         dateStart: load.dateStart,
         startStation: load.startStation,
-        startTimer: load.startTimer,
+        startTime: load.startTime,
         destinationStation: load.destinationStation,
         arrivalTime: load.arrivalTime,
         price: load.price,
@@ -33,12 +33,12 @@ export const addTicket = load => {
   };
 };
 
-export const findTicketLike = (start, end) => {
+export const findTicketLike = (start, end, date) => {
   return {
     type: FIND_TICKET_LIKE,
     payload: async () => {
       const res = await API.get(
-        `/order?start_station=${start}&end_station=${end}`
+        `/order?start_station=${start}&end_station=${end}&date=${date}`
       );
       const { data } = res.data;
       return data;

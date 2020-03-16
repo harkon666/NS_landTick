@@ -2,13 +2,13 @@ import { REGISTER, LOGIN } from "../config/constants";
 import { API } from "../config/api";
 
 export const register = regis => {
-  const { name, username, email, password, gender, phone, address } = regis;
+  const { name, identity, email, password, gender, phone, address } = regis;
   return {
     type: REGISTER,
     payload: async () => {
       const res = await API.post("/register", {
         name,
-        username,
+        identity,
         email,
         password,
         gender,

@@ -6,10 +6,10 @@ import { Modal, Form, Row, Col } from "react-bootstrap";
 function ModalRegister(props) {
   const [registers, setRegister] = useState({
     name: "",
-    username: "",
+    identity: "",
     email: "",
     password: "",
-    gender: "",
+    gender: "male",
     phone: "",
     address: ""
   });
@@ -17,19 +17,22 @@ function ModalRegister(props) {
   return (
     <Modal
       {...props}
-      size="lg"
+      size="md"
       animation={false}
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Body className="text-center">
+      <Modal.Body>
         <>
           <h1 class="text-primary">Register</h1>
           <p className="text-danger"></p>
         </>
         <Form>
-          <Row className="mx-5 my-3">
+          <Row className="mx-3 my-3">
             <Col>
+              <Form.Label>
+                <b>Nama</b>
+              </Form.Label>
               <Form.Control
                 placeholder="Name"
                 type="text"
@@ -40,20 +43,26 @@ function ModalRegister(props) {
               />
             </Col>
           </Row>
-          <Row className="mx-5 my-3">
+          <Row className="mx-3 my-3">
             <Col>
+              <Form.Label>
+                <b>No Identitas</b>
+              </Form.Label>
               <Form.Control
-                placeholder="Username"
+                placeholder="identity"
                 type="text"
-                value={registers.username}
+                value={registers.identity}
                 onChange={e =>
-                  setRegister({ ...registers, username: e.target.value })
+                  setRegister({ ...registers, identity: e.target.value })
                 }
               />
             </Col>
           </Row>
-          <Row className="mx-5 my-3">
+          <Row className="mx-3 my-3">
             <Col>
+              <Form.Label>
+                <b>Email</b>
+              </Form.Label>
               <Form.Control
                 placeholder="email"
                 type="text"
@@ -64,8 +73,11 @@ function ModalRegister(props) {
               />
             </Col>
           </Row>
-          <Row className="mx-5 my-3">
+          <Row className="mx-3 my-3">
             <Col>
+              <Form.Label>
+                <b>Password</b>
+              </Form.Label>
               <Form.Control
                 placeholder="Password"
                 type="password"
@@ -76,20 +88,28 @@ function ModalRegister(props) {
               />
             </Col>
           </Row>
-          <Row className="mx-5 my-3">
+          <Row className="mx-3 my-3">
             <Col>
+              <Form.Label>
+                <b>Jenis Kelamin</b>
+              </Form.Label>
               <Form.Control
-                placeholder="Gender"
-                type="text"
-                value={registers.gender}
+                as="select"
                 onChange={e =>
                   setRegister({ ...registers, gender: e.target.value })
                 }
-              />
+              >
+                <option value="male">male</option>
+                <option value="female">female</option>
+              </Form.Control>
+              {console.log(registers.gender, "woi")}
             </Col>
           </Row>
-          <Row className="mx-5 my-3">
+          <Row className="mx-3 my-3">
             <Col>
+              <Form.Label>
+                <b>No Handphone</b>
+              </Form.Label>
               <Form.Control
                 placeholder="phone"
                 type="text"
@@ -100,8 +120,11 @@ function ModalRegister(props) {
               />
             </Col>
           </Row>
-          <Row className="mx-5 my-3">
+          <Row className="mx-3 my-3">
             <Col>
+              <Form.Label>
+                <b>Alamat</b>
+              </Form.Label>
               <Form.Control
                 placeholder="Address"
                 type="text"
@@ -113,15 +136,17 @@ function ModalRegister(props) {
             </Col>
           </Row>
         </Form>
-        <button
-          className="btn btn-primary"
-          onClick={() => {
-            props.register(registers);
-          }}
-          style={{ width: "25%" }}
-        >
-          Login
-        </button>
+        <div className="container text-center">
+          <button
+            className="btn btn-primary"
+            onClick={() => {
+              props.register(registers);
+            }}
+            style={{ width: "25%" }}
+          >
+            Login
+          </button>
+        </div>
       </Modal.Body>
     </Modal>
   );

@@ -26,6 +26,8 @@ const ListTransaction = ({ allOrder, order, chooseTicket }) => {
       return <p className="text-danger">Cancel</p>;
     }
   };
+
+  console.log(order, "woi cuks");
   return (
     <>
       <ModalInvoice
@@ -37,6 +39,8 @@ const ListTransaction = ({ allOrder, order, chooseTicket }) => {
         show={modalEdit.show}
         onHide={() => setModalEdit({ ...modalEdit, show: false })}
         id={modalEdit.id}
+        setEdit={setModalEdit}
+        edit={modalEdit}
       />
       <div className="container mt-5">
         <h2>List Transaksi</h2>
@@ -59,8 +63,7 @@ const ListTransaction = ({ allOrder, order, chooseTicket }) => {
                     <td>{i + 1}</td>
                     <td>{item.user.name}</td>
                     <td>
-                      {item.ticket.startStation}-
-                      {item.ticket.destinationStation}
+                      {item.ticket.start.location} - {item.ticket.end.location}
                     </td>
                     <td>{item.attachment}</td>
                     <td>{colorStatus(item.status)}</td>

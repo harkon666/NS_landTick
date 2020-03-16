@@ -11,6 +11,8 @@ const {
 } = require("./controllers/order");
 const { getTicket, addTicket, findOrderLike } = require("./controllers/ticket");
 const { getType } = require("./controllers/type_id");
+const { createPassenger } = require("./controllers/passenger");
+const { getStation } = require("./controllers/station");
 
 module.exports = function(app) {
   app.post("/api/login", login);
@@ -26,4 +28,6 @@ module.exports = function(app) {
   app.get("/api/orders", allOrder);
   app.put("/api/order/:id", auth, approvePayment);
   app.get("/api/order", findOrderLike);
+  app.post("/api/passengers", auth, createPassenger);
+  app.get("/api/station", getStation);
 };

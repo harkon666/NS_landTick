@@ -20,7 +20,7 @@ function ModalLogin(props) {
   return (
     <Modal
       {...props}
-      size="lg"
+      size="md"
       animation={false}
       aria-labelledby="contained-modal-title-vcenter"
       centered
@@ -35,7 +35,7 @@ function ModalLogin(props) {
           )}
         </>
         <Form>
-          <Row className="mx-5 my-3">
+          <Row className="mx-3 my-3">
             <Col>
               <Form.Control
                 placeholder="Email"
@@ -45,7 +45,7 @@ function ModalLogin(props) {
               />
             </Col>
           </Row>
-          <Row className="mx-5 my-3">
+          <Row className="mx-3 my-3">
             <Col>
               <Form.Control
                 placeholder="Password"

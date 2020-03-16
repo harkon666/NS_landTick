@@ -7,7 +7,7 @@ module.exports = {
       [
         {
           name: "John Doe",
-          username: "admin",
+          identity: "19271275",
           email: "admin@admin.com",
           password: "admin",
           gender: "male",

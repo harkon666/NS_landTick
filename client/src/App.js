@@ -29,7 +29,10 @@ function App({ user, thisUser, auth }) {
           <Route path="/" exact component={Home} />
           <Route path="/payment" exact component={Payment} />
           <Route path="/payment/:id" exact component={payment} />
-          <Route path="/my-ticket" exact component={MyTicket} />
+          <Route path="/my-ticket" exact>
+            {" "}
+            <MyTicket />
+          </Route>
         </Switch>
       </Router>
     </>

@@ -25,13 +25,27 @@ module.exports = {
         type: Sequelize.STRING
       },
       startStation: {
-        type: Sequelize.STRING
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "stations",
+          key: "id"
+        },
+        onUpdate: "cascade",
+        onDelete: "cascade"
       },
-      startTimer: {
+      startTime: {
         type: Sequelize.STRING
       },
       destinationStation: {
-        type: Sequelize.STRING
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "stations",
+          key: "id"
+        },
+        onUpdate: "cascade",
+        onDelete: "cascade"
       },
       arrivalTime: {
         type: Sequelize.STRING

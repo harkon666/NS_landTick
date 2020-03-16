@@ -1,22 +1,18 @@
 "use strict";
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("orders", {
+    return queryInterface.createTable("passengers", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      ticket_id: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: "tickets",
-          key: "id"
-        },
-        onUpdate: "cascade",
-        onDelete: "cascade"
+      dewasa: {
+        type: Sequelize.STRING
+      },
+      tanda_pengenal: {
+        type: Sequelize.STRING
       },
       user_id: {
         allowNull: false,
@@ -28,17 +24,15 @@ module.exports = {
         onUpdate: "cascade",
         onDelete: "cascade"
       },
-      qty: {
-        type: Sequelize.INTEGER
-      },
-      totalPrice: {
-        type: Sequelize.INTEGER
-      },
-      status: {
-        type: Sequelize.STRING
-      },
-      attachment: {
-        type: Sequelize.STRING
+      ticket_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "tickets",
+          key: "id"
+        },
+        onUpdate: "cascade",
+        onDelete: "cascade"
       },
       createdAt: {
         allowNull: false,
@@ -51,6 +45,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("orders");
+    return queryInterface.dropTable("passengers");
   }
 };

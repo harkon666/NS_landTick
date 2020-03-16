@@ -1,16 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { approvePayment } from "../../_actions/order";
 import { chooseTicket } from "../../_actions/order";
 
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+
 const ModalEdit = props => {
-  const [approve, setApprove] = useState("approved");
+  const [approve, setApprove] = useState(null);
+  const inputLabel = useRef(null);
+  const [labelWidth, setLabelWidth] = useState(0);
+
+  useEffect(() => {
+    if (inputLabel.current) {
+      setLabelWidth(inputLabel.current.offsetWidth);
+    }
+  }, [inputLabel.current]);
+
   useEffect(() => {
     if (props.id) {
       props.chooseTicket(props.id);
     }
   }, [props.id]);
+
   console.log(props.order, "woi asu");
   if (props.id) {
     return (
@@ -38,7 +53,7 @@ const ModalEdit = props => {
               <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Control
                   type="text"
-                  placeholder={`${props.order?.chooseTicket?.ticket?.startStation}-${props.order?.chooseTicket?.ticket?.destinationStation}`}
+                  placeholder={`${props.order?.chooseTicket?.ticket?.start?.location} - ${props.order?.chooseTicket?.ticket?.end?.location}`}
                   disabled
                 />
               </Form.Group>
@@ -49,14 +64,36 @@ const ModalEdit = props => {
                   disabled
                 />
               </Form.Group>
-              <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Control type="text" value={approve} />
-              </Form.Group>
+              <FormControl variant="outlined" className="w-100">
+                <InputLabel
+                  ref={inputLabel}
+                  id="demo-simple-select-outlined-label"
+                >
+                  Validasi
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  value={approve}
+                  onChange={e => setApprove(e.target.value)}
+                  labelWidth={labelWidth}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={"approved"}>approved</MenuItem>
+                  <MenuItem value={"pending"}>pending</MenuItem>
+                  <MenuItem value={"canceled"}>canceled</MenuItem>
+                </Select>
+              </FormControl>
             </form>
             <div className="col text-center mt-4">
               <Button
                 className="w-25"
-                onClick={() => props.approvePayment(props.id, approve)}
+                onClick={() => {
+                  props.approvePayment(props.id, approve);
+                  window.location.reload();
+                }}
               >
                 Save
               </Button>

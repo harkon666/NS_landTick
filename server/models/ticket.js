@@ -6,9 +6,9 @@ module.exports = (sequelize, DataTypes) => {
       nameTrain: DataTypes.STRING,
       type_id: DataTypes.INTEGER,
       dateStart: DataTypes.STRING,
-      startStation: DataTypes.STRING,
-      startTimer: DataTypes.STRING,
-      destinationStation: DataTypes.STRING,
+      startStation: DataTypes.INTEGER,
+      startTime: DataTypes.STRING,
+      destinationStation: DataTypes.INTEGER,
       arrivalTime: DataTypes.STRING,
       price: DataTypes.INTEGER,
       qty: DataTypes.INTEGER
@@ -19,6 +19,16 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     ticket.belongsTo(models.type, {
       foreignKey: "type_id"
+    });
+
+    ticket.belongsTo(models.station, {
+      foreignKey: "startStation",
+      as: "start"
+    });
+
+    ticket.belongsTo(models.station, {
+      foreignKey: "destinationStation",
+      as: "end"
     });
   };
   return ticket;

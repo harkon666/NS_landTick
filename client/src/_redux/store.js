@@ -5,6 +5,8 @@ import user from "../_reducers/user";
 import type from "../_reducers/type";
 import component from "../_reducers/component";
 import order from "../_reducers/order";
+import station from "../_reducers/station";
+import passenger from "../_reducers/passenger";
 import { logger, promise } from "../middleware/index";
 
 const rootReducers = combineReducers({
@@ -13,7 +15,9 @@ const rootReducers = combineReducers({
   user,
   type,
   component,
-  order
+  order,
+  station,
+  passenger
 });
 
 const store = createStore(rootReducers, applyMiddleware(logger, promise));

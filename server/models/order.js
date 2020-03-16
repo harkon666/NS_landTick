@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
       qty: DataTypes.INTEGER,
       totalPrice: DataTypes.INTEGER,
       status: DataTypes.STRING,
-      attachment: DataTypes.STRING
+      attachment: DataTypes.STRING,
+      paid: DataTypes.BOOLEAN
     },
     {}
   );
@@ -17,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     order.belongsTo(models.ticket, {
       foreignKey: "ticket_id"
     });
+
     order.belongsTo(models.user, {
       foreignKey: "user_id"
     });

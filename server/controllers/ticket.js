@@ -1,14 +1,35 @@
 const models = require("../models");
 const Ticket = models.ticket;
 const Type = models.type;
+const Station = models.station;
 const { Op } = require("sequelize");
 
 exports.getTicket = async (req, res) => {
   try {
+    const date = () => {
+      let d = new Date();
+      return `${d.getFullYear()}-0${d.getMonth() + 1}-${d.getDate()}`;
+    };
+    console.log(date());
     const data = await Ticket.findAll({
+      where: { dateStart: date() },
       include: [
         {
           model: Type,
+          attributes: {
+            exclude: ["updatedAt", "createdAt"]
+          }
+        },
+        {
+          model: Station,
+          as: "start",
+          attributes: {
+            exclude: ["updatedAt", "createdAt"]
+          }
+        },
+        {
+          model: Station,
+          as: "end",
           attributes: {
             exclude: ["updatedAt", "createdAt"]
           }
@@ -29,7 +50,7 @@ exports.addTicket = async (req, res) => {
       type_id,
       dateStart,
       startStation,
-      startTimer,
+      startTime,
       destinationStation,
       arrivalTime,
       price,
@@ -40,7 +61,7 @@ exports.addTicket = async (req, res) => {
       type_id,
       dateStart,
       startStation,
-      startTimer,
+      startTime,
       destinationStation,
       arrivalTime,
       price,
@@ -56,16 +77,42 @@ exports.findOrderLike = async (req, res) => {
   try {
     const start = req.query.start_station;
     const end = req.query.end_station;
+    const dateStart = req.query.date;
+    const tanggal = new Date();
     const data = await Ticket.findAll({
       where: {
-        startStation: {
-          [Op.iLike]: `%${start}%`
-        },
-        destinationStation: { [Op.iLike]: `%${end}%` }
+        dateStart: dateStart
+          ? dateStart
+          : `${tanggal.getFullYear()}-0${tanggal.getMonth() +
+              1}-${tanggal.getDate()}`
       },
       include: [
         {
           model: Type,
+          attributes: {
+            exclude: ["updatedAt", "createdAt"]
+          }
+        },
+        {
+          model: Station,
+          as: "start",
+          where: {
+            station: {
+              [Op.iLike]: `%${start}%`
+            }
+          },
+          attributes: {
+            exclude: ["updatedAt", "createdAt"]
+          }
+        },
+        {
+          model: Station,
+          as: "end",
+          where: {
+            station: {
+              [Op.iLike]: `%${end}%`
+            }
+          },
           attributes: {
             exclude: ["updatedAt", "createdAt"]
           }

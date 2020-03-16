@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { Modal, Card } from "react-bootstrap";
-import { chooseTicket } from "../../_actions/order";
+import { Modal, Card, Button } from "react-bootstrap";
+import { chooseTicket, approvePayment } from "../../_actions/order";
 import { connect } from "react-redux";
 
 const ModalInvoice = props => {
@@ -67,7 +67,7 @@ const ModalInvoice = props => {
                   <div className="col">
                     <div className="row mb-5">
                       <div className="col">
-                        <h4>{data?.ticket?.startTimer}</h4>
+                        <h4>{data?.ticket?.startTime}</h4>
                         <h6>
                           {data?.ticket?.dateStart
                             ? fixDate(data?.ticket?.dateStart)
@@ -89,12 +89,20 @@ const ModalInvoice = props => {
                   <div className="col">
                     <div className="row mb-5">
                       <div className="col">
-                        <h4>{data?.ticket?.startStation}</h4>
+                        <h4>
+                          {data?.ticket?.start?.location} -{" "}
+                          {data?.ticket?.start?.station} (
+                          {data?.ticket?.start?.code})
+                        </h4>
                       </div>
                     </div>
-                    <div className="row pt-4">
+                    <div className="row mb-5">
                       <div className="col">
-                        <h4>{data?.ticket?.destinationStation}</h4>
+                        <h4>
+                          {data?.ticket?.end?.location} -{" "}
+                          {data?.ticket?.end?.station} (
+                          {data?.ticket?.end?.code})
+                        </h4>
                       </div>
                     </div>
                   </div>
@@ -107,6 +115,7 @@ const ModalInvoice = props => {
                     style={{ height: "280px", width: "100%" }}
                   >
                     <Card.Img
+                      style={{ height: 300 }}
                       alt="Attachment card"
                       src={
                         props?.order?.chooseTicket?.attachment
@@ -154,8 +163,33 @@ const ModalInvoice = props => {
               </div>
               <div className="col">
                 <h2 className="text-primary text-right">
-                  Rp. {data?.totalPrice}
+                  Rp. {data?.totalPrice * data?.qty}
                 </h2>
+              </div>
+            </div>
+            <div className="row mt-2 pt-2 justify-content-center border-top">
+              <div className="col-3">
+                <Button
+                  block
+                  variant="danger"
+                  onClick={() => {
+                    props.approvePayment(props.id, "canceled");
+                    window.location.reload();
+                  }}
+                >
+                  Cancle
+                </Button>
+              </div>
+              <div className="col-3">
+                <Button
+                  block
+                  onClick={() => {
+                    props.approvePayment(props.id, "approved");
+                    window.location.reload();
+                  }}
+                >
+                  Approve
+                </Button>
               </div>
             </div>
           </div>
@@ -174,7 +208,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    chooseTicket: id => dispatch(chooseTicket(id))
+    chooseTicket: id => dispatch(chooseTicket(id)),
+    approvePayment: (id, status) => dispatch(approvePayment(id, status))
   };
 };
 

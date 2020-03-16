@@ -4,12 +4,13 @@ import { connect } from "react-redux";
 import { getTicket } from "../_actions/ticket";
 import { thisUser } from "../_actions/user";
 import { uploadPayment, chooseTicket } from "../_actions/order";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import MButton from "@material-ui/core/Button";
 
 const Payment = ({ thisUser, user, order, uploadPayment, chooseTicket }) => {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
+  const [step, setStep] = useState(false);
   const { id } = useParams();
   useEffect(() => {
     chooseTicket(id);
@@ -86,7 +87,7 @@ const Payment = ({ thisUser, user, order, uploadPayment, chooseTicket }) => {
                         </div>
                         <div className="row mt-3">
                           <div className="col-3">
-                            <p>316712374612</p>
+                            <p>{user.data.identity}</p>
                           </div>
                           <div className="col-3">
                             <p>{user.data.name}</p>
@@ -128,19 +129,36 @@ const Payment = ({ thisUser, user, order, uploadPayment, chooseTicket }) => {
                           </div>
                           <div className="col">
                             <b>
-                              <h3>Rp. {order?.chooseTicket?.totalPrice}</h3>
+                              <h3>
+                                Rp.{" "}
+                                {order?.chooseTicket?.totalPrice *
+                                  order?.chooseTicket?.qty}
+                              </h3>
                             </b>
                           </div>
                         </div>
                       </Card.Footer>
                     </Card>
-                    <Button
-                      className="mt-3"
-                      block
-                      onClick={() => bayarSekarang(id, file)}
-                    >
-                      Bayar Sekarang
-                    </Button>
+                    {step ? (
+                      <Link to="/my-ticket">
+                        <Button
+                          className="mt-3"
+                          block
+                          onClick={() => bayarSekarang(id, file)}
+                        >
+                          Bayar Sekarang
+                        </Button>
+                      </Link>
+                    ) : (
+                      <Button
+                        className="mt-3"
+                        block
+                        onClick={() => bayarSekarang(id, file)}
+                        disabled
+                      >
+                        Bayar Sekarang
+                      </Button>
+                    )}
                   </div>
                   <div className="col mb-5">
                     <Card className="bg-dark text-white">
@@ -161,6 +179,7 @@ const Payment = ({ thisUser, user, order, uploadPayment, chooseTicket }) => {
                           style={{ display: "none" }}
                           name="payment"
                           onChange={e => {
+                            setStep(true);
                             setFile(e.target.files[0]);
                             setPreview(URL.createObjectURL(e.target.files[0]));
                           }}
@@ -174,7 +193,6 @@ const Payment = ({ thisUser, user, order, uploadPayment, chooseTicket }) => {
                             style={{ width: "335px" }}
                           >
                             Upload
-                            {console.log(file, "woiiiiss")}
                           </MButton>
                         </label>
                       </form>
@@ -214,7 +232,7 @@ const Payment = ({ thisUser, user, order, uploadPayment, chooseTicket }) => {
                             <div className="col-1"></div>
                             <div className="col">
                               <h3 className="text-dark">
-                                {order?.chooseTicket?.ticket?.startTimer}
+                                {order?.chooseTicket?.ticket?.startTime}
                               </h3>
                               <p style={{ fontSize: 12 }}>
                                 {order.chooseTicket.ticket
@@ -225,9 +243,11 @@ const Payment = ({ thisUser, user, order, uploadPayment, chooseTicket }) => {
                               </p>
                             </div>
                             <div className="col">
-                              <h3 className="text-dark">
-                                {order?.chooseTicket?.ticket?.startStation}
-                              </h3>
+                              <h4 className="text-dark">
+                                {order?.chooseTicket?.ticket?.start?.location} -{" "}
+                                {order?.chooseTicket?.ticket?.start?.station} (
+                                {order?.chooseTicket?.ticket?.start?.code})
+                              </h4>
                             </div>
                           </div>
                           <div className="row">
@@ -246,10 +266,9 @@ const Payment = ({ thisUser, user, order, uploadPayment, chooseTicket }) => {
                             </div>
                             <div className="col">
                               <h4 className="text-dark">
-                                {
-                                  order?.chooseTicket?.ticket
-                                    ?.destinationStation
-                                }
+                                {order?.chooseTicket?.ticket?.end?.location} -{" "}
+                                {order?.chooseTicket?.ticket?.end?.station} (
+                                {order?.chooseTicket?.ticket?.end?.code})
                               </h4>
                             </div>
                           </div>

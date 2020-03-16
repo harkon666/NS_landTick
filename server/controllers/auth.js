@@ -18,7 +18,6 @@ exports.login = async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    res.send({ message: "bgst" });
   }
 };
 
@@ -26,7 +25,7 @@ exports.register = async (req, res) => {
   try {
     const {
       name,
-      username,
+      identity,
       email,
       password,
       gender,
@@ -35,7 +34,7 @@ exports.register = async (req, res) => {
     } = req.body;
     const create = await User.create({
       name,
-      username,
+      identity,
       email,
       password,
       gender,

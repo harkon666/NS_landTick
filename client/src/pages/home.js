@@ -19,9 +19,10 @@ const Home = ({ ticket, getTicket, thisUser, user, component }) => {
       {!user.data.isAdmin ? (
         <>
           <Jumbotron />
-          <div className="container">
+          <div className="container pb-5">
             <Card data={data} />
           </div>
+          <footer className="bg-primary"></footer>
         </>
       ) : (
         <>

@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "react-bootstrap";
+
 import { addTicket } from "../../_actions/ticket";
 import { getType } from "../../_actions/type";
+import { getStation } from "../../_actions/station";
+
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -14,9 +17,9 @@ const AddTicket = props => {
     nameTrain: "",
     type_id: 0,
     dateStart: "",
-    startStation: "",
-    startTimer: "",
-    destinationStation: "",
+    startStation: 0,
+    startTime: "",
+    destinationStation: 0,
     arrivalTime: "",
     price: 0,
     qty: 0
@@ -27,6 +30,7 @@ const AddTicket = props => {
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
     props.getType();
+    props.getStation();
   }, []);
 
   const validate = data => {
@@ -43,7 +47,6 @@ const AddTicket = props => {
       alert("berhasil");
     }
   };
-  console.log(props.ticket, "woi asu");
   return (
     <>
       <div className="container mt-5">
@@ -100,18 +103,32 @@ const AddTicket = props => {
                 onChange={e => setData({ ...data, dateStart: e.target.value })}
               />
               {console.log(data.dateStart, "woi")}
-              <TextField
-                id="outlined-secondary"
-                label="Stasiun Keberangkatan"
-                variant="outlined"
-                color="primary"
-                style={{ width: "100%" }}
-                className="my-2"
-                value={data.startStation}
-                onChange={e =>
-                  setData({ ...data, startStation: e.target.value })
-                }
-              />
+              <FormControl variant="outlined" className="w-100 my-2">
+                <InputLabel
+                  ref={inputLabel}
+                  id="demo-simple-select-outlined-label"
+                >
+                  Stasiun Awal
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  value={data.startStation}
+                  onChange={e =>
+                    setData({ ...data, startStation: e.target.value })
+                  }
+                  labelWidth={labelWidth}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {props.station.data.map(item => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.location} - {item.station} ({item.code})
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
               <TextField
                 id="time"
                 label="Jam Keberangkatan"
@@ -119,26 +136,40 @@ const AddTicket = props => {
                 defaultValue="13:30"
                 variant="outlined"
                 className="my-2"
-                value={data.startTimer}
+                value={data.startTime}
                 InputLabelProps={{
                   shrink: true
                 }}
-                value={data.startTimer}
+                value={data.startTime}
                 style={{ width: "100%" }}
-                onChange={e => setData({ ...data, startTimer: e.target.value })}
+                onChange={e => setData({ ...data, startTime: e.target.value })}
               />
-              <TextField
-                id="outlined-secondary"
-                label="Stasiun Tujuan"
-                variant="outlined"
-                color="primary"
-                style={{ width: "100%" }}
-                className="my-2"
-                value={data.destinationStation}
-                onChange={e =>
-                  setData({ ...data, destinationStation: e.target.value })
-                }
-              />
+              <FormControl variant="outlined" className="w-100 my-2">
+                <InputLabel
+                  ref={inputLabel}
+                  id="demo-simple-select-outlined-label"
+                >
+                  Stasiun Tujuan
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  value={data.destinationStation}
+                  onChange={e =>
+                    setData({ ...data, destinationStation: e.target.value })
+                  }
+                  labelWidth={labelWidth}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {props.station.data.map(item => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.location} - {item.station} ({item.code})
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
               <TextField
                 id="time"
                 label="Jam Tiba"
@@ -199,14 +230,16 @@ const AddTicket = props => {
 const mapStateToProps = state => {
   return {
     ticket: state.ticket,
-    type: state.type
+    type: state.type,
+    station: state.station
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     addTicket: data => dispatch(addTicket(data)),
-    getType: () => dispatch(getType())
+    getType: () => dispatch(getType()),
+    getStation: () => dispatch(getStation())
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AddTicket);

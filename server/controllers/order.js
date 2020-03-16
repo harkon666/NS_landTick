@@ -3,6 +3,7 @@ const Order = models.order;
 const Ticket = models.ticket;
 const User = models.user;
 const Type = models.type;
+const Station = models.station;
 
 exports.myTicket = async (req, res) => {
   try {
@@ -17,6 +18,20 @@ exports.myTicket = async (req, res) => {
               attributes: {
                 exclude: ["createdAt", "updatedAt"]
               }
+            },
+            {
+              model: Station,
+              as: "start",
+              attributes: {
+                exlude: ["createdAt", "updatedAt"]
+              }
+            },
+            {
+              model: Station,
+              as: "end",
+              attributes: {
+                exlude: ["createdAt", "updatedAt"]
+              }
             }
           ],
           attributes: {
@@ -29,7 +44,8 @@ exports.myTicket = async (req, res) => {
             exclude: ["createdAt", "updatedAt"]
           }
         }
-      ]
+      ],
+      order: [["id", "desc"]]
     });
     res.send({ message: "success", data });
   } catch (err) {
@@ -69,7 +85,8 @@ exports.paymentProof = async (req, res) => {
     } else {
       await Order.update(
         {
-          attachment: filename
+          attachment: filename,
+          paid: true
         },
         { where: { id } }
       );
@@ -99,6 +116,20 @@ exports.chooseTicket = async (req, res) => {
               model: Type,
               attributes: {
                 exclude: ["createdAt", "updatedAt"]
+              }
+            },
+            {
+              model: Station,
+              as: "start",
+              attributes: {
+                exlude: ["createdAt", "updatedAt"]
+              }
+            },
+            {
+              model: Station,
+              as: "end",
+              attributes: {
+                exlude: ["createdAt", "updatedAt"]
               }
             }
           ],
@@ -132,6 +163,20 @@ exports.allOrder = async (req, res) => {
               attributes: {
                 exclude: ["createdAt", "updatedAt"]
               }
+            },
+            {
+              model: Station,
+              as: "start",
+              attributes: {
+                exlude: ["createdAt", "updatedAt"]
+              }
+            },
+            {
+              model: Station,
+              as: "end",
+              attributes: {
+                exlude: ["createdAt", "updatedAt"]
+              }
             }
           ],
           attributes: {
@@ -144,7 +189,8 @@ exports.allOrder = async (req, res) => {
             exclude: ["createdAt", "updatedAt"]
           }
         }
-      ]
+      ],
+      order: [["id", "desc"]]
     });
     res.send({ message: "success", data });
   } catch (err) {

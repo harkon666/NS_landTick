@@ -13,3 +13,5 @@ export const ALL_ORDER = "ALL_ORDER";
 export const APPROVE = "APPROVE";
 export const FIND_TICKET_LIKE = "FIND_ORDER_LIKE";
 export const LOGOUT = "LOGOUT";
+export const GET_STATION = "GET_STATION";
+export const ADD_PASSENGER = "ADD_PASSENGER";
