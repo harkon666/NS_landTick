@@ -11,8 +11,6 @@ Application matchmaking for your pets
 - [Screenshots](#screenshots)
 - [Built With](#built-with)
 - [Author](#author)
-- [License](#license)
-- [Note](#note)
 
 ## Getting Started
 
@@ -90,7 +88,3 @@ npm start
 ## Author
 
 **Bryan Dewa Wicaksana** - [harkon666](https://github.com/harkon666)
-
-## Note
-
-Still need to fix some issue
