@@ -78,8 +78,8 @@ npm start
 
 ## Screenshots
 
-![landing_kittinder](https://user-images.githubusercontent.com/51023310/77308475-93de5980-6d2d-11ea-8d5f-7867aff929a2.png)
-![Screenshot from 2020-02-17 18-30-48](https://user-images.githubusercontent.com/51023310/77308627-ddc73f80-6d2d-11ea-8aa8-3166f444b9df.png)
+![landing_land_tick](https://user-images.githubusercontent.com/51023310/77309053-8aa1bc80-6d2e-11ea-9d6c-3334844650dd.png)
+![Screenshot from 2020-03-09 14-33-09](https://user-images.githubusercontent.com/51023310/77309102-a4430400-6d2e-11ea-9710-820d66153e44.png)
 
 ## Built With
 
