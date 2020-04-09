@@ -119,7 +119,7 @@ const ModalInvoice = (props) => {
                       alt="Attachment card"
                       src={
                         props?.order?.chooseTicket?.attachment
-                          ? require(`../../../build/static/media/${props?.order?.chooseTicket?.attachment}`)
+                          ? require(`../../images/${props?.order?.chooseTicket?.attachment}`)
                           : null
                       }
                     />
