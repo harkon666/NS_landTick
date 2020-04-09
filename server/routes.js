@@ -7,14 +7,15 @@ const {
   paymentProof,
   chooseTicket,
   allOrder,
-  approvePayment
+  approvePayment,
 } = require("./controllers/order");
 const { getTicket, addTicket, findOrderLike } = require("./controllers/ticket");
 const { getType } = require("./controllers/type_id");
 const { createPassenger } = require("./controllers/passenger");
 const { getStation } = require("./controllers/station");
+const { welcome } = require("./controllers/welcome");
 
-module.exports = function(app) {
+module.exports = function (app) {
   app.post("/api/login", login);
   app.post("/api/register", register);
   app.post("/api/buy", auth, buyTicket);
@@ -30,4 +31,5 @@ module.exports = function(app) {
   app.get("/api/order", findOrderLike);
   app.post("/api/passengers", auth, createPassenger);
   app.get("/api/station", getStation);
+  app.get("/", welcome);
 };
