@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 const DropDown = ({ user, RoutingAdmin, logout }) => {
   const [route, setRoute] = useState({
     listTransaction: true,
-    addTicket: false
+    addTicket: false,
   });
 
   useEffect(() => {
@@ -44,10 +44,11 @@ const DropDown = ({ user, RoutingAdmin, logout }) => {
               to="/"
               onClick={() => {
                 logout();
-                window.location.reload();
               }}
             >
-              <Dropdown.Item>Logout</Dropdown.Item>
+              <Dropdown.Item onClick={() => window.location.reload()}>
+                Logout
+              </Dropdown.Item>
             </Link>
           </DropdownButton>
         </div>
@@ -77,16 +78,16 @@ const DropDown = ({ user, RoutingAdmin, logout }) => {
   }
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    component: state.component
+    component: state.component,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    RoutingAdmin: route => dispatch(RoutingAdmin(route)),
-    logout: () => dispatch(logout())
+    RoutingAdmin: (route) => dispatch(RoutingAdmin(route)),
+    logout: () => dispatch(logout()),
   };
 };
 

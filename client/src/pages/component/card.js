@@ -8,7 +8,7 @@ import { findTicketLike } from "../../_actions/ticket";
 import TextField from "@material-ui/core/TextField";
 
 import SyncAltRoundedIcon from "@material-ui/icons/SyncAltRounded";
-const MyCard = props => {
+const MyCard = (props) => {
   const { findTicketrLike } = props;
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
@@ -54,7 +54,7 @@ const MyCard = props => {
                         placeholder="...jakarta"
                         value={start}
                         style={{ height: "30px" }}
-                        onChange={e => setStart(e.target.value)}
+                        onChange={(e) => setStart(e.target.value)}
                       />
                       <datalist id="lokasi-awal">
                         {props.station.data.map((item, i) => (
@@ -75,12 +75,13 @@ const MyCard = props => {
                       <TextField
                         id="date"
                         type="date"
-                        defaultValue={`${tanggal.getFullYear()}-0${tanggal.getMonth() +
-                          1}-${tanggal.getDate()}`}
+                        defaultValue={`${tanggal.getFullYear()}-0${
+                          tanggal.getMonth() + 1
+                        }-${tanggal.getDate()}`}
                         InputLabelProps={{
-                          shrink: true
+                          shrink: true,
                         }}
-                        onChange={e => setDate(e.target.value)}
+                        onChange={(e) => setDate(e.target.value)}
                       />
                     </Form.Group>
                   </div>
@@ -114,7 +115,7 @@ const MyCard = props => {
                         value={end}
                         style={{ height: "30px" }}
                         list="lokasi-tujuan"
-                        onChange={e => setEnd(e.target.value)}
+                        onChange={(e) => setEnd(e.target.value)}
                       />
                       <datalist id="lokasi-tujuan">
                         {props.station.data.map((item, i) => (
@@ -134,7 +135,7 @@ const MyCard = props => {
                       </Form.Label>
                       <Form.Control
                         as="select"
-                        onChange={e => setQuantity(Number(e.target.value))}
+                        onChange={(e) => setQuantity(Number(e.target.value))}
                       >
                         {["", "", "", "", "", "", ""].map((item, i) => (
                           <option value={i + 1} key={i}>
@@ -175,18 +176,18 @@ const MyCard = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     ticket: state.ticket,
-    station: state.station
+    station: state.station,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     findTicketrLike: (start, end, date) =>
       dispatch(findTicketLike(start, end, date)),
-    getStation: () => dispatch(getStation())
+    getStation: () => dispatch(getStation()),
   };
 };
 

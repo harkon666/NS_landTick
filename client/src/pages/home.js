@@ -9,11 +9,10 @@ import Admin from "./component/admin";
 const Home = ({ ticket, getTicket, thisUser, user, component }) => {
   useEffect(() => {
     getTicket();
-    thisUser();
   }, []);
 
   const { data } = ticket;
-  console.log(component, "wois");
+  console.log(user, "woi");
   return (
     <>
       {!user.data.isAdmin ? (
@@ -33,18 +32,17 @@ const Home = ({ ticket, getTicket, thisUser, user, component }) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     ticket: state.ticket,
     user: state.user,
-    component: state.component
+    component: state.component,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     getTicket: () => dispatch(getTicket()),
-    thisUser: () => dispatch(thisUser())
   };
 };
 

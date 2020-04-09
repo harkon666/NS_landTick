@@ -5,10 +5,10 @@ import {
   UPLOAD_PAYMENT,
   CHOOSE_TICKET,
   ALL_ORDER,
-  APPROVE
+  APPROVE,
 } from "../config/constants";
 
-export const orderTicket = load => {
+export const orderTicket = (load) => {
   const token = localStorage.getItem("jwToken");
   return {
     type: ORDER_TICKET,
@@ -18,11 +18,11 @@ export const orderTicket = load => {
       const res = await API.post("/buy", {
         ticket_id: load.ticket_id,
         qty: load.qty,
-        totalPrice: load.totalPrice
+        totalPrice: load.totalPrice,
       });
       const { data } = res.data;
       return data;
-    }
+    },
   };
 };
 
@@ -35,28 +35,29 @@ export const myTicket = () => {
       const res = await API.get("/myTicket");
       const { data } = res.data;
       return data;
-    }
+    },
   };
 };
 
-export const uploadPayment = formData => {
+export const uploadPayment = (formData) => {
   const token = localStorage.getItem("jwToken");
+  console.log(formData, "woi file");
   return {
     type: UPLOAD_PAYMENT,
     payload: async () => {
       setAuthToken(token);
       const res = await API.post("/upload", formData, {
         headers: {
-          "Content-Type": "multipart/form-data"
-        }
+          "Content-Type": "multipart/form-data",
+        },
       });
       const { data } = res.data;
       return data;
-    }
+    },
   };
 };
 
-export const chooseTicket = id => {
+export const chooseTicket = (id) => {
   const token = localStorage.getItem("jwToken");
   return {
     type: CHOOSE_TICKET,
@@ -65,7 +66,7 @@ export const chooseTicket = id => {
       const res = await API.get(`/myTicket/${id}`);
       const { data } = res.data;
       return data;
-    }
+    },
   };
 };
 
@@ -76,7 +77,7 @@ export const allOrder = () => {
       const res = await API.get("/orders");
       const { data } = res.data;
       return data;
-    }
+    },
   };
 };
 
@@ -87,10 +88,10 @@ export const approvePayment = (id, status) => {
     payload: async () => {
       setAuthToken(token);
       const res = await API.put(`/order/${id}`, {
-        status
+        status,
       });
       const { data } = res.data;
       return data;
-    }
+    },
   };
 };

@@ -5,14 +5,15 @@ import { addPassenger } from "../_actions/passenger";
 import { getTicket } from "../_actions/ticket";
 import { thisUser } from "../_actions/user";
 import { myTicket, chooseTicket } from "../_actions/order";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 const MyTicket = ({
   thisUser,
   myTicket,
   order,
   addPassenger,
-  chooseTicket
+  chooseTicket,
+  user,
 }) => {
   const [step, setStep] = useState(false);
   const [idTicket, setIdTicket] = useState(null);
@@ -23,7 +24,7 @@ const MyTicket = ({
     myTicket();
   }, []);
 
-  const fixDate = item => {
+  const fixDate = (item) => {
     const param = item.split("-");
     const date = new Date(item);
     const option = { month: "long" };
@@ -32,7 +33,7 @@ const MyTicket = ({
     return `${param[2]} ${month} ${param[0]}`;
   };
 
-  const dayName = item => {
+  const dayName = (item) => {
     const days = [
       "Sunday",
       "Monday",
@@ -40,13 +41,13 @@ const MyTicket = ({
       "Wednesday",
       "Thursday",
       "Friday",
-      "Saturday"
+      "Saturday",
     ];
     const day = new Date(item);
     return days[day.getDay()];
   };
 
-  const totalInput = num => {
+  const totalInput = (num) => {
     let qty = [];
     for (let i = 0; i < num; i++) {
       qty.push("");
@@ -56,10 +57,11 @@ const MyTicket = ({
   };
   const myTickets = order.myTicket;
 
-  console.log(passenger, "woi cuks");
+  console.log(user.data, "woi ckuaks");
   if (!step) {
     return (
       <>
+        {user.data.length === 0 ? <Redirect to={{ pathname: "/" }} /> : null}
         <div className="container mt-5">
           <h2>Ticket Saya</h2>
         </div>
@@ -214,13 +216,13 @@ const MyTicket = ({
                         <Form.Label>Penumpang {i + 1}</Form.Label>
                         <Form.Control
                           type="text"
-                          onChange={e =>
+                          onChange={(e) =>
                             setPassenger({
                               ...passenger,
                               [`passenger_${i + 1}`]: {
                                 ...passenger[`passenger_${i + 1}`],
-                                name: e.target.value
-                              }
+                                name: e.target.value,
+                              },
                             })
                           }
                         />
@@ -229,13 +231,13 @@ const MyTicket = ({
                         <Form.Label>No Indentitas Penumpang {i + 1}</Form.Label>
                         <Form.Control
                           type="text"
-                          onChange={e =>
+                          onChange={(e) =>
                             setPassenger({
                               ...passenger,
                               [`passenger_${i + 1}`]: {
                                 ...passenger[`passenger_${i + 1}`],
-                                identity: e.target.value
-                              }
+                                identity: e.target.value,
+                              },
                             })
                           }
                         />
@@ -262,21 +264,21 @@ const MyTicket = ({
   }
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     ticket: state.ticket,
     user: state.user,
-    order: state.order
+    order: state.order,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     getTicket: () => dispatch(getTicket()),
     thisUser: () => dispatch(thisUser()),
     myTicket: () => dispatch(myTicket()),
     addPassenger: (load, id) => dispatch(addPassenger(load, id)),
-    chooseTicket: id => dispatch(chooseTicket(id))
+    chooseTicket: (id) => dispatch(chooseTicket(id)),
   };
 };
 

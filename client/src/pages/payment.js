@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { getTicket } from "../_actions/ticket";
 import { thisUser } from "../_actions/user";
 import { uploadPayment, chooseTicket } from "../_actions/order";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, Redirect } from "react-router-dom";
 import MButton from "@material-ui/core/Button";
 
 const Payment = ({ thisUser, user, order, uploadPayment, chooseTicket }) => {
@@ -17,7 +17,7 @@ const Payment = ({ thisUser, user, order, uploadPayment, chooseTicket }) => {
     thisUser();
   }, []);
 
-  const fixDate = item => {
+  const fixDate = (item) => {
     const param = item.split("-");
     const date = new Date(item);
     const option = { month: "long" };
@@ -26,7 +26,7 @@ const Payment = ({ thisUser, user, order, uploadPayment, chooseTicket }) => {
     return `${param[2]} ${month} ${param[0]}`;
   };
 
-  const dayName = item => {
+  const dayName = (item) => {
     const days = [
       "Sunday",
       "Monday",
@@ -34,7 +34,7 @@ const Payment = ({ thisUser, user, order, uploadPayment, chooseTicket }) => {
       "Wednesday",
       "Thursday",
       "Friday",
-      "Saturday"
+      "Saturday",
     ];
     const day = new Date(item);
     return days[day.getDay()];
@@ -50,6 +50,7 @@ const Payment = ({ thisUser, user, order, uploadPayment, chooseTicket }) => {
   if (!order.loading) {
     return (
       <>
+        {user.data.length === 0 ? <Redirect to={{ pathname: "/" }} /> : null}
         <div className="container my-t">
           <h2 className="my-5">Invoice</h2>
           <div className="row">
@@ -159,6 +160,7 @@ const Payment = ({ thisUser, user, order, uploadPayment, chooseTicket }) => {
                         Bayar Sekarang
                       </Button>
                     )}
+                    {console.log(file, "woi file")}
                   </div>
                   <div className="col mb-5">
                     <Card className="bg-dark text-white">
@@ -178,7 +180,7 @@ const Payment = ({ thisUser, user, order, uploadPayment, chooseTicket }) => {
                           type="file"
                           style={{ display: "none" }}
                           name="payment"
-                          onChange={e => {
+                          onChange={(e) => {
                             setStep(true);
                             setFile(e.target.files[0]);
                             setPreview(URL.createObjectURL(e.target.files[0]));
@@ -288,20 +290,20 @@ const Payment = ({ thisUser, user, order, uploadPayment, chooseTicket }) => {
   }
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     ticket: state.ticket,
     user: state.user,
-    order: state.order
+    order: state.order,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     getTicket: () => dispatch(getTicket()),
     thisUser: () => dispatch(thisUser()),
-    uploadPayment: formData => dispatch(uploadPayment(formData)),
-    chooseTicket: id => dispatch(chooseTicket(id))
+    uploadPayment: (formData) => dispatch(uploadPayment(formData)),
+    chooseTicket: (id) => dispatch(chooseTicket(id)),
   };
 };
 

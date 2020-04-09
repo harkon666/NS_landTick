@@ -11,14 +11,11 @@ import payment from "./pages/payment";
 
 function App({ user, thisUser, auth }) {
   useEffect(() => {
-    thisUser();
-  }, []);
-
-  useEffect(() => {
-    if (auth.data.message == "success") {
+    if (auth.data) {
       thisUser();
     }
   }, [auth]);
+  console.log(auth.data, "woi gan");
   return (
     <>
       <Router>
@@ -29,26 +26,23 @@ function App({ user, thisUser, auth }) {
           <Route path="/" exact component={Home} />
           <Route path="/payment" exact component={Payment} />
           <Route path="/payment/:id" exact component={payment} />
-          <Route path="/my-ticket" exact>
-            {" "}
-            <MyTicket />
-          </Route>
+          <Route path="/my-ticket" exact component={MyTicket} />
         </Switch>
       </Router>
     </>
   );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.user,
-    auth: state.auth
+    auth: state.auth,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    thisUser: () => dispatch(thisUser())
+    thisUser: () => dispatch(thisUser()),
   };
 };
 

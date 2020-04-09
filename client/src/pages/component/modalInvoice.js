@@ -3,8 +3,8 @@ import { Modal, Card, Button } from "react-bootstrap";
 import { chooseTicket, approvePayment } from "../../_actions/order";
 import { connect } from "react-redux";
 
-const ModalInvoice = props => {
-  const fixDate = item => {
+const ModalInvoice = (props) => {
+  const fixDate = (item) => {
     const date = new Date(item);
     const option = { month: "long" };
     let res = new Intl.DateTimeFormat("en-US", option).format(date);
@@ -19,7 +19,7 @@ const ModalInvoice = props => {
     }
   }, [props.id]);
   const data = props?.order?.chooseTicket;
-  const dayName = item => {
+  const dayName = (item) => {
     const days = [
       "Sunday",
       "Monday",
@@ -27,7 +27,7 @@ const ModalInvoice = props => {
       "Wednesday",
       "Thursday",
       "Friday",
-      "Saturday"
+      "Saturday",
     ];
     const day = new Date(item);
     return days[day.getDay()];
@@ -119,7 +119,7 @@ const ModalInvoice = props => {
                       alt="Attachment card"
                       src={
                         props?.order?.chooseTicket?.attachment
-                          ? require(`../../images/${props?.order?.chooseTicket?.attachment}`)
+                          ? require(`../../../build/static/media/${props?.order?.chooseTicket?.attachment}`)
                           : null
                       }
                     />
@@ -200,16 +200,16 @@ const ModalInvoice = props => {
     return <></>;
   }
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    order: state.order
+    order: state.order,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    chooseTicket: id => dispatch(chooseTicket(id)),
-    approvePayment: (id, status) => dispatch(approvePayment(id, status))
+    chooseTicket: (id) => dispatch(chooseTicket(id)),
+    approvePayment: (id, status) => dispatch(approvePayment(id, status)),
   };
 };
 
