@@ -17,7 +17,7 @@ const Navigation = ({ user, auth }) => {
   }, [auth]);
 
   return (
-    <nav class="navbar navbar-expand shadow">
+    <nav className="navbar navbar-expand shadow">
       <div className="container">
         <div className="col-lg-8">
           <Link to="/">
@@ -34,7 +34,7 @@ const Navigation = ({ user, auth }) => {
                 />
                 <button
                   onClick={() => setModalSignup(true)}
-                  class="btn btn-outline-primary my-2 my-sm-0 ml-1 ml-5"
+                  className="btn btn-outline-primary my-2 my-sm-0 ml-1 ml-5"
                   type="submit"
                 >
                   Daftar
@@ -45,7 +45,7 @@ const Navigation = ({ user, auth }) => {
                 />
                 <button
                   onClick={() => setModalLogin(true)}
-                  class="btn btn-outline-primary my-2 my-sm-0 ml-3"
+                  className="btn btn-outline-primary my-2 my-sm-0 ml-3"
                 >
                   Login
                 </button>
@@ -62,9 +62,9 @@ const Navigation = ({ user, auth }) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    auth: state.auth
+    auth: state.auth,
   };
 };
 

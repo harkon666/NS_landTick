@@ -27,7 +27,7 @@ function ModalLogin(props) {
     >
       <Modal.Body className="text-center">
         <>
-          <h1 class="text-primary">Login</h1>
+          <h1 className="text-primary">Login</h1>
           {!auth.data.message == "Wrong Email" || "Wrong Password" ? (
             <p className="text-danger">{auth.data.message}</p>
           ) : (
@@ -41,7 +41,7 @@ function ModalLogin(props) {
                 placeholder="Email"
                 type="email"
                 value={email}
-                onChange={e => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Col>
           </Row>
@@ -51,7 +51,7 @@ function ModalLogin(props) {
                 placeholder="Password"
                 type="password"
                 value={password}
-                onChange={e => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </Col>
           </Row>
@@ -72,15 +72,15 @@ function ModalLogin(props) {
   );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    auth: state.auth
+    auth: state.auth,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    login: (email, password) => dispatch(login(email, password))
+    login: (email, password) => dispatch(login(email, password)),
   };
 };
 
